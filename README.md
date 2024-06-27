@@ -82,4 +82,3 @@ mediapipe
 numpy
 ```
 
-Make sure to replace placeholders like `yourusername`, `your-email@example.com`, and the repository URL with your actual details.
