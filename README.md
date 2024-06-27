@@ -26,7 +26,7 @@ This is a real-time drawing application that uses OpenCV and MediaPipe for hand 
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/hand-gesture-drawing.git
+    git clone https://github.com/machphy/Hand_Gesture_Drawing.git
     cd hand-gesture-drawing
     ```
 
@@ -70,11 +70,11 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For any questions or suggestions, please feel free to reach out to me at [your-email@example.com].
+For any questions or suggestions, please feel free to reach out to me at [rajeevsharmamachphy@gmail.com].
 
 ---
 
-### Example Requirements File (`requirements.txt`)
+### Requirements File (`requirements.txt`)
 
 ```
 opencv-python-headless
