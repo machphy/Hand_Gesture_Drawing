@@ -1,8 +1,3 @@
-# Hand_Gesture_Drawing
-
-Here's a comprehensive README file for your interactive hand gesture drawing application:
-
----
 
 # Interactive Hand Gesture Drawing Application
 
