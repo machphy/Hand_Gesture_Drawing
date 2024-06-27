@@ -3,28 +3,27 @@ import numpy as np
 import mediapipe as mp
 from collections import deque
 
-# Giving different arrays to handle colour points of different colours
+# for color
 bpoints = [deque(maxlen=1024)]
 gpoints = [deque(maxlen=1024)]
 rpoints = [deque(maxlen=1024)]
 ypoints = [deque(maxlen=1024)]
 
-# These indexes will be used to mark the points in particular arrays of specific colour
+
 blue_index = 0
 green_index = 0
 red_index = 0
 yellow_index = 0
 
-# The kernel to be used for dilation purpose
+#  dilation purposeb ke liye 
 kernel = np.ones((5, 5), np.uint8)
 
 colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (0, 255, 255)]
 colorIndex = 0
-
-# Here is code for Canvas setup
+
 paintWindow = np.zeros((471, 636, 3)) + 255
 
-# Define button properties
+#button all four 
 button_radius = 30
 button_positions = {
     "CLEAR": (603, 50),
@@ -34,7 +33,7 @@ button_positions = {
     "YELLOW": (603, 450)
 }
 
-# Draw buttons
+# buttons style ke liye 
 for label, center in button_positions.items():
     color = (0, 0, 0) if label == "CLEAR" else colors[list(button_positions.keys()).index(label) - 1]
     cv2.circle(paintWindow, center, button_radius, color, -1)
@@ -42,35 +41,34 @@ for label, center in button_positions.items():
 
 cv2.namedWindow('Paint', cv2.WINDOW_AUTOSIZE)
 
-# Initialize mediapipe
+# use as mediapipe
 mpHands = mp.solutions.hands
 hands = mpHands.Hands(max_num_hands=1, min_detection_confidence=0.7)
 mpDraw = mp.solutions.drawing_utils
 
-# Initialize the webcam
+# webcam camra 
 cap = cv2.VideoCapture(0)
 ret = True
 while ret:
-    # Read each frame from the webcam
+    
     ret, frame = cap.read()
 
     x, y, c = frame.shape
 
-    # Flip the frame vertically
+    
     frame = cv2.flip(frame, 1)
     framergb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-    # Draw the color selection buttons
-    for label, center in button_positions.items():
+     button_positions.items():
         color = (0, 0, 0) if label == "CLEAR" else colors[list(button_positions.keys()).index(label) - 1]
         cv2.circle(frame, center, button_radius, color, -1)
         cv2.putText(frame, label, (center[0] - 25, center[1] + 5), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2, cv2.LINE_AA)
 
-    # Highlight the selected color
+    
     selected_center = list(button_positions.values())[colorIndex + 1]
     cv2.circle(frame, selected_center, button_radius, (255, 255, 255), 2)
 
-    # Get hand landmark prediction
+    # Get hand landmark 
     result = hands.process(framergb)
 
     # Post process the result
@@ -82,7 +80,7 @@ while ret:
                 lmy = int(lm.y * 480)
                 landmarks.append([lmx, lmy])
 
-            # Drawing landmarks on frames
+            # landmark 
             mpDraw.draw_landmarks(frame, handslms, mpHands.HAND_CONNECTIONS)
         fore_finger = (landmarks[8][0], landmarks[8][1])
         center = fore_finger
@@ -137,7 +135,7 @@ while ret:
         ypoints.append(deque(maxlen=512))
         yellow_index += 1
 
-    # Draw lines of all the colors on the canvas and frame
+    # Draw lines of all the colors on the canvas and frame use this code 😐
     points = [bpoints, gpoints, rpoints, ypoints]
     for i in range(len(points)):
         for j in range(len(points[i])):
@@ -153,6 +151,6 @@ while ret:
     if cv2.waitKey(1) == ord('q'):
         break
 
-# Release the webcam and destroy all active windows
+# sb band kro agr nhi smjh aa raha to
 cap.release()
 cv2.destroyAllWindows()
